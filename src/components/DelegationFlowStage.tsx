@@ -15,9 +15,10 @@ const INITIAL_ELAPSED_SECONDS = 2.45;
 const REDUCED_MOTION_SNAPSHOT_SECONDS = 7.2;
 
 const LANE_SCHEDULES = [
-  { d: 0.28, run: 2.25 }, // Lane 0: finishes 2nd
-  { d: 0.44, run: 2.95 }, // Lane 1: finishes 3rd
-  { d: 0.58, run: 1.38 }, // Lane 2: finishes 1st
+  { d: 0.24, run: 2.2 }, // Lane 0 (Claude Code): finishes 2nd
+  { d: 0.38, run: 3.0 }, // Lane 1 (Codex): finishes 4th
+  { d: 0.5, run: 2.55 }, // Lane 2 (Antigravity): finishes 3rd
+  { d: 0.62, run: 1.35 }, // Lane 3 (Pi): finishes 1st
 ].map((entry) => ({
   ...entry,
   arr: entry.d + TRAVEL_SECONDS,
@@ -25,7 +26,7 @@ const LANE_SCHEDULES = [
   back: entry.d + TRAVEL_SECONDS + entry.run + TRAVEL_SECONDS,
 }));
 
-const FEED_ORDER = [2, 0, 1] as const;
+const FEED_ORDER = [3, 0, 2, 1] as const;
 
 interface LaneSpec {
   id: string;
@@ -43,7 +44,7 @@ const LANES: readonly LaneSpec[] = [
   {
     id: 'claude-code',
     name: 'Claude Code',
-    model: 'Opus 4.6',
+    model: 'Opus 5.5',
     icon: '/icons/claude-code.svg',
     dotColor: 'var(--dlg-dot-claude)',
     taskZh: '补全单测',
@@ -53,7 +54,7 @@ const LANES: readonly LaneSpec[] = [
   {
     id: 'codex',
     name: 'Codex',
-    model: 'gpt-5.4 High',
+    model: 'GPT-6.2-Sol',
     icon: '/icons/codex.svg',
     dotColor: 'var(--dlg-dot-codex)',
     taskZh: '审查变更',
@@ -61,9 +62,19 @@ const LANES: readonly LaneSpec[] = [
     duration: '3m 06s',
   },
   {
+    id: 'antigravity',
+    name: 'Antigravity',
+    model: 'Gemini 4 Neon',
+    icon: '/icons/antigravity.svg',
+    dotColor: 'var(--dlg-dot-agy)',
+    taskZh: '写前端与文档',
+    taskEn: 'Frontend & docs',
+    duration: '2m 42s',
+  },
+  {
     id: 'pi',
     name: 'Pi',
-    model: 'Fast · Worktree',
+    model: 'GPT-6.2-Astra · Fast',
     icon: '/icons/pi.svg',
     invertDark: true,
     dotColor: 'var(--dlg-dot-pi)',
@@ -87,30 +98,30 @@ export function DelegationFlowStage({ locale }: DelegationFlowStageProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const originDotRef = useRef<HTMLSpanElement | null>(null);
   const cvDotRef = useRef<HTMLSpanElement | null>(null);
-  const cvPulseRefs = useRef<Array<HTMLElement | null>>([null, null, null]);
+  const cvPulseRefs = useRef<Array<HTMLElement | null>>([null, null, null, null]);
 
-  const laneRootRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
-  const laneInDotRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null]);
-  const laneOutDotRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null]);
-  const lanePrgRefs = useRef<Array<SVGCircleElement | null>>([null, null, null]);
-  const laneStateRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null]);
+  const laneRootRefs = useRef<Array<HTMLDivElement | null>>([null, null, null, null]);
+  const laneInDotRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null, null]);
+  const laneOutDotRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null, null]);
+  const lanePrgRefs = useRef<Array<SVGCircleElement | null>>([null, null, null, null]);
+  const laneStateRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null, null]);
 
-  const feedRootRefs = useRef<Array<HTMLDivElement | null>>([null, null, null]);
-  const feedMetaRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null]);
+  const feedRootRefs = useRef<Array<HTMLDivElement | null>>([null, null, null, null]);
+  const feedMetaRefs = useRef<Array<HTMLSpanElement | null>>([null, null, null, null]);
 
-  const outBaseRefs = useRef<Array<SVGPathElement | null>>([null, null, null]);
-  const outCometRefs = useRef<Array<SVGPathElement | null>>([null, null, null]);
-  const outHaloRefs = useRef<Array<SVGCircleElement | null>>([null, null, null]);
-  const outHeadRefs = useRef<Array<SVGCircleElement | null>>([null, null, null]);
-  const outGradRefs = useRef<Array<SVGLinearGradientElement | null>>([null, null, null]);
-  const outLenRefs = useRef<number[]>([0, 0, 0]);
+  const outBaseRefs = useRef<Array<SVGPathElement | null>>([null, null, null, null]);
+  const outCometRefs = useRef<Array<SVGPathElement | null>>([null, null, null, null]);
+  const outHaloRefs = useRef<Array<SVGCircleElement | null>>([null, null, null, null]);
+  const outHeadRefs = useRef<Array<SVGCircleElement | null>>([null, null, null, null]);
+  const outGradRefs = useRef<Array<SVGLinearGradientElement | null>>([null, null, null, null]);
+  const outLenRefs = useRef<number[]>([0, 0, 0, 0]);
 
-  const retBaseRefs = useRef<Array<SVGPathElement | null>>([null, null, null]);
-  const retCometRefs = useRef<Array<SVGPathElement | null>>([null, null, null]);
-  const retHaloRefs = useRef<Array<SVGCircleElement | null>>([null, null, null]);
-  const retHeadRefs = useRef<Array<SVGCircleElement | null>>([null, null, null]);
-  const retGradRefs = useRef<Array<SVGLinearGradientElement | null>>([null, null, null]);
-  const retLenRefs = useRef<number[]>([0, 0, 0]);
+  const retBaseRefs = useRef<Array<SVGPathElement | null>>([null, null, null, null]);
+  const retCometRefs = useRef<Array<SVGPathElement | null>>([null, null, null, null]);
+  const retHaloRefs = useRef<Array<SVGCircleElement | null>>([null, null, null, null]);
+  const retHeadRefs = useRef<Array<SVGCircleElement | null>>([null, null, null, null]);
+  const retGradRefs = useRef<Array<SVGLinearGradientElement | null>>([null, null, null, null]);
+  const retLenRefs = useRef<number[]>([0, 0, 0, 0]);
 
   const [hoveredLane, setHoveredLane] = useState<number | null>(null);
   const [actionFlash, setActionFlash] = useState<Record<string, boolean>>({});
@@ -550,7 +561,7 @@ export function DelegationFlowStage({ locale }: DelegationFlowStageProps) {
           </div>
         </div>
 
-        {/* Center: 3 Parallel Agent Lanes */}
+        {/* Center: 4 Parallel Agent Lanes */}
         <div className="dlg-col dlg-col--lanes">
           <span className="dlg-eyebrow">
             {zh ? '独立会话 · 并行执行' : 'Independent sessions · Parallel'}

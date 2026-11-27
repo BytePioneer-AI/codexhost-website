@@ -91,6 +91,11 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
   const [activeTab, setActiveTab] = useState<ShowcaseTabId>('delegation');
   const [selectedChild, setSelectedChild] = useState<'claude' | 'pi' | 'grok'>('claude');
   const [selectedHost, setSelectedHost] = useState<'linux' | 'local' | 'win'>('linux');
+  const [phoneReplied, setPhoneReplied] = useState<Record<'linux' | 'local' | 'win', boolean>>({
+    linux: true,
+    local: false,
+    win: false,
+  });
   const [showHashMenu, setShowHashMenu] = useState(false);
   const [showHandoffSource, setShowHandoffSource] = useState(false);
 
@@ -172,10 +177,14 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
       outputLabel: zh ? '远端采样 · gpu-dev-01 (SSH)' : 'Remote soak · gpu-dev-01 (SSH)',
       outputCode: `worker-01  rss=184MB (peak 612MB → 184MB)\nlisteners  close_hooks=1  leaked=0\nstatus     healthy · 10m soak verified`,
       phoneTitle: zh ? 'Linux 开发机' : 'Linux Dev Box',
+      phoneMetricLabel: zh ? '已修改 2 个文件' : 'Edited 2 files',
+      phoneMetricDiff: '+28 -6',
+      phoneMetricFiles: ['stream-buffer.ts', 'worker.test.ts'],
       phoneAlert: zh
         ? 'StreamBuffer 泄漏已验证修复，RSS 稳定在 184MB，是否滚动重启？'
         : 'StreamBuffer leak verified fixed (RSS 184MB). Rolling restart now?',
       phoneReply: zh ? '保留堆快照，直接滚动重启。' : 'Keep heap dump, restart now.',
+      phoneAck: zh ? '已同步至 gpu-dev-01 · 滚动重启中' : 'Synced to gpu-dev-01 · Restarting',
     },
     local: {
       hostBadge: 'MacBook Pro',
@@ -194,10 +203,14 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
       outputLabel: 'codexhost status',
       outputCode: `daemon     running · 127.0.0.1:4400\npeers      gpu-dev-01 (SSH) · win-studio (Peer)\nthreads    5 active · live 3-client sync`,
       phoneTitle: zh ? '本机 Mac' : 'Local Mac',
+      phoneMetricLabel: zh ? 'Peer Hub 在线' : 'Peer Hub live',
+      phoneMetricDiff: '3 hosts',
+      phoneMetricFiles: ['gpu-dev-01 · SSH', 'win-studio · Peer'],
       phoneAlert: zh
         ? '3 台主机目录已实时同步，随时可从手机切换查看。'
         : '3 host directories synced live—switch anytime from mobile.',
       phoneReply: zh ? '切到 gpu-dev-01 看压测' : 'Switch to gpu-dev-01',
+      phoneAck: zh ? '已切换至 gpu-dev-01 实时会话' : 'Switched to gpu-dev-01 live thread',
     },
     win: {
       hostBadge: 'win-studio',
@@ -216,8 +229,12 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
       outputLabel: zh ? '远端测试 · win-studio (Windows 11)' : 'Remote test · win-studio (Win 11)',
       outputCode: `cargo test -p codexhost-shim named_pipe\n✓ pipe reconnects after epipe   11ms\n✓ daemon hides console window    4ms`,
       phoneTitle: zh ? 'Windows 主机' : 'Windows Rig',
+      phoneMetricLabel: zh ? '回归测试通过' : 'Regressions passed',
+      phoneMetricDiff: '2 / 2',
+      phoneMetricFiles: ['named_pipe.rs', 'daemon_hide.rs'],
       phoneAlert: zh ? 'Windows 专属回归全部通过，安装包就绪。' : 'Windows regressions passed. Build ready.',
       phoneReply: zh ? '保存校验和并通知我' : 'Save checksum and notify me',
+      phoneAck: zh ? '已触发 win-studio 校验和归档' : 'Triggered checksum archive on win-studio',
     },
   }[selectedHost];
 
@@ -245,10 +262,20 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
 
   const composerAgent =
     activeTab === 'multihost'
-      ? { icon: hostData.agentIcon, invertDark: hostData.invertDark, model: hostData.agent === 'Claude Code' ? 'Opus Auto' : 'gpt-5.4 High', usage: 'CH 96% · $0.06' }
+      ? {
+          icon: hostData.agentIcon,
+          invertDark: hostData.invertDark,
+          model:
+            hostData.agent === 'Claude Code'
+              ? 'Opus 5.5'
+              : hostData.agent === 'Pi'
+                ? 'GPT-6.2-Astra · Fast'
+                : 'GPT-6.2-Sol High',
+          usage: 'CH 96% · $0.06',
+        }
       : activeTab === 'native'
-        ? { icon: '/icons/claude-code.svg', invertDark: false, model: 'Opus 4.6 · Plan', usage: 'CH 99.2% · $0.11' }
-        : { icon: '/icons/codex.svg', invertDark: false, model: 'gpt-5.4 High', usage: 'CH 94% · $0.08' };
+        ? { icon: '/icons/claude-code.svg', invertDark: false, model: 'Opus 5.5 · Plan', usage: 'CH 99.2% · $0.11' }
+        : { icon: '/icons/codex.svg', invertDark: false, model: 'GPT-6.2-Sol High', usage: 'CH 94% · $0.08' };
 
   return (
     <div className="w-full max-w-[1160px] mx-auto">
@@ -1052,7 +1079,7 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
             {/* Tab 1 Right: Live Subagent Split Pane */}
             {activeTab === 'delegation' && (
               <>
-                <div className="flex flex-col min-h-0">
+                <div className="flex flex-col flex-1 min-h-0">
                   <div className="h-11 px-3 border-b border-hairline flex items-center justify-between gap-2 shrink-0">
                     <div className="flex items-center gap-1.5 min-w-0">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-muted text-ink font-medium text-[12px] min-w-0">
@@ -1110,7 +1137,7 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
             {/* Tab 2 Right: Intact Source Context Outline */}
             {activeTab === 'handoff' && (
               <>
-                <div className="flex flex-col min-h-0">
+                <div className="flex flex-col flex-1 min-h-0">
                   <div className="h-11 px-3.5 border-b border-hairline flex items-center justify-between gap-2 shrink-0">
                     <span className="inline-flex items-center gap-1.5 font-medium text-ink text-[12.5px]">
                       <AgentGlyph src="/icons/claude-code.svg" alt="Claude Code" size={13} />
@@ -1163,7 +1190,7 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
             {/* Tab 3 Right: Dedicated Mobile Relay Companion */}
             {activeTab === 'multihost' && (
               <>
-                <div className="flex flex-col min-h-0">
+                <div className="flex flex-col flex-1 min-h-0">
                   <div className="h-11 px-4 border-b border-hairline flex items-center justify-between shrink-0">
                     <span className="font-medium text-ink text-[12.5px]">CodexHost Mobile</span>
                     <span className="inline-flex items-center gap-1.5 font-mono text-[12px] text-ink-muted">
@@ -1172,26 +1199,130 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
                     </span>
                   </div>
 
-                  <div className="p-4 flex-1 flex flex-col justify-center">
-                    <div className="rounded-[22px] border border-hairline-strong bg-surface-card p-3.5 space-y-3 shadow-[0_12px_30px_-14px_rgba(0,0,0,0.12)]">
-                      <div className="flex items-center justify-between text-[12px] font-mono text-ink-muted pb-2 border-b border-hairline">
-                        <span>9:41</span>
-                        <span className="w-9 h-1 rounded-full bg-hairline-strong" />
-                        <span>5G</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-ink">{hostData.phoneTitle}</span>
-                        <StatusDot state="running" />
-                      </div>
-                      <div className="rounded-xl bg-surface-muted p-3 text-[12.5px] text-ink-secondary leading-[1.55]">
-                        {hostData.phoneAlert}
-                      </div>
-                      <div className="rounded-xl bg-cta text-cta-ink px-3 py-2 text-[12.5px] font-medium leading-[1.45]">
-                        {hostData.phoneReply}
-                      </div>
-                      <div className="flex items-center justify-between rounded-lg bg-surface-muted px-3 py-2 text-[12px] text-ink-muted">
-                        <span>{zh ? '回复该主机...' : 'Reply...'}</span>
-                        <Send className="w-3.5 h-3.5 text-ink" />
+                  <div className="p-3.5 flex-1 min-h-0 flex items-center justify-center bg-[#f4f5f7]/60 dark:bg-[#0d0e11]">
+                    {/* Authentic full-height portrait smartphone frame */}
+                    <div className="w-full max-w-[266px] h-full rounded-[28px] bg-[#1a1c20] dark:bg-[#050607] p-[6px] shadow-[0_18px_38px_-16px_rgba(0,0,0,0.28)] flex flex-col">
+                      <div className="flex-1 min-h-0 rounded-[22px] bg-surface-card flex flex-col justify-between overflow-hidden">
+                        {/* Top Status Bar + Mobile App Bar */}
+                        <div>
+                          <div className="px-4 pt-2.5 pb-1.5 flex items-center justify-between text-[12px] font-mono text-ink-muted">
+                            <span className="font-medium text-ink">9:41</span>
+                            <span
+                              className="w-14 h-3 rounded-full bg-[#141619] dark:bg-[#000000]"
+                              aria-hidden="true"
+                            />
+                            <span>5G</span>
+                          </div>
+
+                          <div className="px-3.5 py-2 border-b border-hairline flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <PanelLeft className="w-3.5 h-3.5 text-ink-muted shrink-0" strokeWidth={1.6} />
+                              <span className="font-medium text-[12.5px] text-ink truncate">
+                                {hostData.phoneTitle}
+                              </span>
+                            </div>
+                            <span className="inline-flex items-center gap-1.5 font-mono text-[12px] text-ink-muted shrink-0">
+                              <StatusDot state="running" />
+                              <span>{hostData.hostBadge}</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Middle Mobile Conversation Body */}
+                        <div className="flex-1 min-h-0 px-3.5 py-3 flex flex-col justify-between gap-2.5 overflow-hidden">
+                          <div className="space-y-2.5">
+                            <div className="flex items-center justify-between text-[12px] text-ink-muted">
+                              <span className="inline-flex items-center gap-1.5 font-medium text-ink">
+                                <AgentGlyph
+                                  src={hostData.agentIcon}
+                                  alt={hostData.agent}
+                                  invertDark={hostData.invertDark}
+                                  size={13}
+                                />
+                                <span>{hostData.agent}</span>
+                              </span>
+                              <span>{hostData.elapsed}</span>
+                            </div>
+
+                            <p className="text-[12.5px] text-ink leading-[1.52]">
+                              {hostData.phoneAlert}
+                            </p>
+
+                            {/* Compact borderless tinted result card */}
+                            <div className="rounded-xl bg-surface-muted px-3 py-2.5 space-y-1.5">
+                              <div className="flex items-center justify-between text-[12px]">
+                                <span className="font-medium text-ink">{hostData.phoneMetricLabel}</span>
+                                <span className="font-mono text-[#15803d] dark:text-[#4ade80]">
+                                  {hostData.phoneMetricDiff}
+                                </span>
+                              </div>
+                              <div className="space-y-0.5 font-mono text-[12px] text-ink-secondary">
+                                {hostData.phoneMetricFiles.map((file) => (
+                                  <div key={file} className="truncate">
+                                    {file}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Interactive Mobile Quick Reply / Sent Bubble */}
+                          <div className="space-y-2">
+                            {phoneReplied[selectedHost] ? (
+                              <>
+                                <div className="flex justify-end">
+                                  <div className="rounded-2xl rounded-br-md bg-[#edf3ff] dark:bg-[#1c2330] px-3 py-2 text-[12px] text-ink leading-[1.45] max-w-[92%]">
+                                    {hostData.phoneReply}
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-between text-[12px] text-ink-muted">
+                                  <span className="inline-flex items-center gap-1.5 truncate">
+                                    <Check className="w-3.5 h-3.5 text-[#16a34a] shrink-0" />
+                                    <span className="truncate">{hostData.phoneAck}</span>
+                                  </span>
+                                </div>
+                              </>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setPhoneReplied((prev) => ({ ...prev, [selectedHost]: true }))
+                                }
+                                className="w-full rounded-xl bg-cta text-cta-ink hover:bg-cta-hover transition-colors px-3 py-2 text-[12px] font-medium flex items-center justify-between gap-2 cursor-pointer"
+                              >
+                                <span className="truncate">{hostData.phoneReply}</span>
+                                <Send className="w-3.5 h-3.5 shrink-0" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Bottom Mobile Composer + Home Indicator */}
+                        <div className="px-3 pt-2 pb-2 border-t border-hairline bg-surface-card space-y-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPhoneReplied((prev) => ({
+                                ...prev,
+                                [selectedHost]: !prev[selectedHost],
+                              }))
+                            }
+                            className="w-full flex items-center justify-between rounded-full bg-surface-muted px-3 py-1.5 text-[12px] text-ink-muted hover:text-ink transition-colors cursor-pointer"
+                          >
+                            <span className="truncate">
+                              {zh ? '发消息或审批操作…' : 'Message or approve…'}
+                            </span>
+                            <span className="w-6 h-6 rounded-full bg-cta text-cta-ink flex items-center justify-center shrink-0">
+                              <Send className="w-3 h-3" />
+                            </span>
+                          </button>
+                          <div className="flex justify-center">
+                            <span
+                              className="w-20 h-1 rounded-full bg-hairline-strong"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1207,7 +1338,7 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
             {/* Tab 4 Right: Account Reuse & Live Usage (modeled on real highlight-account-import.png & highlight-usage.png) */}
             {activeTab === 'native' && (
               <>
-                <div className="flex flex-col min-h-0">
+                <div className="flex flex-col flex-1 min-h-0">
                   <div className="h-11 px-4 border-b border-hairline flex items-center justify-between shrink-0">
                     <span className="font-medium text-ink text-[12.5px]">
                       {zh ? '账号复用与实时用量' : 'Accounts & Live Usage'}
