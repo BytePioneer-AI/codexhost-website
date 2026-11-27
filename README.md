@@ -1,6 +1,6 @@
 # CodexHost Website
 
-Official website and download portal for [CodexHost](https://github.com/BytePioneer-AI/codex-host).
+Official website and download portal for [CodexHost](https://github.com/BytePioneer-AI/codex-host): **https://chost.dev**
 
 ## Features
 
