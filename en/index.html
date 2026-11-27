@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <title>CodexHost — Run Every Coding Agent as One Workspace</title>
+    <meta
+      name="description"
+      content="CodexHost is a free, open-source, local-first workspace that unifies 18+ coding agents including Codex, Claude Code, Pi, Grok, OpenCode, and Cursor CLI. Delegate across agents, hand off context cleanly, and control multiple machines from desktop, web, and mobile."
+    />
+    <meta
+      name="keywords"
+      content="CodexHost, codexhost, Codex Host, Codex Desktop, Claude Code, Pi agent, Grok, OpenCode, Cursor CLI, Antigravity, multi-agent coding, AI coding workspace, remote coding agent"
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://chost.dev/en" />
+    <link rel="alternate" hreflang="zh-CN" href="https://chost.dev/" />
+    <link rel="alternate" hreflang="en" href="https://chost.dev/en" />
+    <link rel="alternate" hreflang="x-default" href="https://chost.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodexHost" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:url" content="https://chost.dev/en" />
+    <meta property="og:title" content="CodexHost — Run Every Coding Agent as One Workspace" />
+    <meta
+      property="og:description"
+      content="Unify 18+ coding agents like Claude Code, Pi, Grok, and Codex in one workspace—delegate in parallel, hand off context cleanly, and stay in reach from any device."
+    />
+    <meta property="og:image" content="https://chost.dev/og-image.png" />
+    <meta property="og:image:alt" content="CodexHost multi-agent coding workspace" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CodexHost — Run Every Coding Agent as One Workspace" />
+    <meta
+      name="twitter:description"
+      content="Unify 18+ coding agents like Claude Code, Pi, Grok, and Codex in one workspace—delegate in parallel, hand off context cleanly, and stay in reach from any device."
+    />
+    <meta name="twitter:image" content="https://chost.dev/og-image.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "url": "https://chost.dev/",
+            "inLanguage": ["en", "zh-CN"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Windows, Linux, Android, Web",
+            "softwareVersion": "0.28.1",
+            "url": "https://chost.dev/en",
+            "downloadUrl": "https://chost.dev/en/download",
+            "image": "https://chost.dev/og-image.png",
+            "license": "https://www.gnu.org/licenses/lgpl-3.0.html",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "sameAs": [
+              "https://github.com/BytePioneer-AI/codex-host"
+            ],
+            "description": "Open-source local-first workspace unifying 18+ coding agents (Codex, Claude Code, Pi, Grok, OpenCode, Cursor CLI) with cross-agent delegation, context handoff, multi-host Peer Hub, and mobile sync."
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Can I use CodexHost on Linux or without Codex Desktop installed?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. CodexHost includes a lightweight standalone Desktop and Web UI for macOS, Windows, and Linux."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is CodexHost free? Does my code or key pass through your servers?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "LGPL-3.0 open source and free, no account needed. Agents connect directly from your machine—zero third-party proxy."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What if macOS says CodexHost cannot be verified on first launch?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Run xattr -dr com.apple.quarantine /Applications/codexhost.app in Terminal and reopen (one-click copy on Download)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is CodexHost different from a multi-model chat wrapper?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "CodexHost drives real coding agent runtimes over native protocols—keeping worktrees, Plan Mode, background terminals, and subagents intact."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('codexhost-theme');
+          var preferDark =
+            saved === 'dark' ||
+            (!saved &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (preferDark) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 import { Sun, Moon } from 'lucide-react';
-import { COPY, type Locale } from '../data/i18n';
+import { buildRoutePath, COPY, type Locale, type PageKey } from '../data/i18n';
 import { GITHUB_DOCS_URL, GITHUB_REPO_URL } from '../data/releases';
 import { CodexHostLogo, GitHubIcon } from './Icons';
 
@@ -10,6 +10,7 @@ interface NavbarProps {
   onSetDark: (value: boolean) => void;
   starsLabel: string;
   currentPath: string;
+  currentPage: PageKey;
   onNavigate: (path: string) => void;
 }
 
@@ -19,16 +20,20 @@ export function Navbar({
   dark,
   onSetDark,
   starsLabel,
-  currentPath,
+  currentPage,
   onNavigate,
 }: NavbarProps) {
   const t = COPY[locale].nav;
-  const isDownload = currentPath.startsWith('/download');
+  const isDownload = currentPage === 'download';
+  const homeHref = buildRoutePath('home', locale);
+  const downloadHref = buildRoutePath('download', locale);
+  const otherLocale: Locale = locale === 'zh' ? 'en' : 'zh';
+  const otherLocaleHref = buildRoutePath(currentPage, otherLocale);
 
   const handleAnchor = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
     if (isDownload) {
       e.preventDefault();
-      onNavigate(`/${hash}`);
+      onNavigate(`${homeHref}${hash}`);
     }
   };
 
@@ -37,10 +42,10 @@ export function Navbar({
       <div className="max-w-[1160px] mx-auto h-full px-5 sm:px-6 flex items-center justify-between gap-4">
         <div className="flex items-center gap-7">
           <a
-            href="/"
+            href={homeHref}
             onClick={(e) => {
               e.preventDefault();
-              onNavigate('/');
+              onNavigate(homeHref);
             }}
             className="flex items-center gap-2 text-ink font-semibold text-[15px] tracking-[-0.02em] shrink-0"
           >
@@ -50,21 +55,21 @@ export function Navbar({
 
           <nav className="hidden md:flex items-center gap-6 text-[13.5px] text-ink-secondary">
             <a
-              href="/#collab"
+              href={`${homeHref}#collab`}
               onClick={(e) => handleAnchor(e, '#collab')}
               className="hover:text-ink transition-colors"
             >
               {t.collab}
             </a>
             <a
-              href="/#multi-host"
+              href={`${homeHref}#multi-host`}
               onClick={(e) => handleAnchor(e, '#multi-host')}
               className="hover:text-ink transition-colors"
             >
               {t.multiHost}
             </a>
             <a
-              href="/#ecosystem"
+              href={`${homeHref}#ecosystem`}
               onClick={(e) => handleAnchor(e, '#ecosystem')}
               className="hover:text-ink transition-colors"
             >
@@ -82,14 +87,18 @@ export function Navbar({
         </div>
 
         <div className="flex items-center gap-2.5 sm:gap-3.5">
-          <button
-            type="button"
-            onClick={onToggleLocale}
+          <a
+            href={otherLocaleHref}
+            hrefLang={otherLocale === 'zh' ? 'zh-CN' : 'en'}
+            onClick={(e) => {
+              e.preventDefault();
+              onToggleLocale();
+            }}
             className="text-[13px] text-ink-secondary hover:text-ink transition-colors px-1.5 py-1"
             aria-label={locale === 'zh' ? 'Switch to English' : '切换为中文'}
           >
             {t.switchLang}
-          </button>
+          </a>
 
           <button
             type="button"
@@ -141,10 +150,10 @@ export function Navbar({
           </a>
 
           <a
-            href="/download"
+            href={downloadHref}
             onClick={(e) => {
               e.preventDefault();
-              onNavigate('/download');
+              onNavigate(downloadHref);
             }}
             className={`inline-flex items-center justify-center h-8 px-3.5 rounded-lg text-[13px] font-medium transition-colors ${
               isDownload

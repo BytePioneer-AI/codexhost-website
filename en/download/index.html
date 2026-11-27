@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <title>Download CodexHost — macOS · Windows · Linux · Android</title>
+    <meta
+      name="description"
+      content="Download CodexHost (free & open source, no account required): installers for macOS Apple Silicon & Intel, Windows x64 & ARM64, Linux, Android APK, iOS PWA, plus npm and winget CLI."
+    />
+    <meta
+      name="keywords"
+      content="Download CodexHost, codexhost installer, CodexHost macOS, CodexHost Windows, CodexHost Linux, CodexHost Android APK, @codexhost/cli"
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://chost.dev/en/download" />
+    <link rel="alternate" hreflang="zh-CN" href="https://chost.dev/download" />
+    <link rel="alternate" hreflang="en" href="https://chost.dev/en/download" />
+    <link rel="alternate" hreflang="x-default" href="https://chost.dev/download" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CodexHost" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:url" content="https://chost.dev/en/download" />
+    <meta property="og:title" content="Download CodexHost — macOS · Windows · Linux · Android" />
+    <meta
+      property="og:description"
+      content="Download CodexHost: open source, free, standalone Desktop, official Codex Desktop enhancement, Web/PWA, and Android APK."
+    />
+    <meta property="og:image" content="https://chost.dev/og-image.png" />
+    <meta property="og:image:alt" content="Download CodexHost clients" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Download CodexHost — macOS · Windows · Linux · Android" />
+    <meta
+      name="twitter:description"
+      content="Download CodexHost: open source, free, standalone Desktop, official Codex Desktop enhancement, Web/PWA, and Android APK."
+    />
+    <meta name="twitter:image" content="https://chost.dev/og-image.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "name": "Download CodexHost",
+            "url": "https://chost.dev/en/download",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Windows, Linux, Android, Web",
+            "softwareVersion": "0.28.1",
+            "url": "https://chost.dev/en",
+            "downloadUrl": "https://chost.dev/en/download",
+            "license": "https://www.gnu.org/licenses/lgpl-3.0.html",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "sameAs": [
+              "https://github.com/BytePioneer-AI/codex-host"
+            ]
+          }
+        ]
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('codexhost-theme');
+          var preferDark =
+            saved === 'dark' ||
+            (!saved &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (preferDark) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

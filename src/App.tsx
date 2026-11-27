@@ -1,42 +1,65 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { DownloadPage } from './pages/DownloadPage';
-import { detectInitialLocale, type Locale } from './data/i18n';
+import {
+  buildRoutePath,
+  PAGE_TITLES,
+  parseRoute,
+  type Locale,
+  type PageKey,
+} from './data/i18n';
 import {
   buildFallbackRelease,
   detectVisitorOs,
   fetchLiveRelease,
+  type ArchKey,
+  type OsKey,
   type ReleaseInfo,
 } from './data/releases';
 
-function normalizePath(pathname: string): string {
-  if (pathname.startsWith('/download')) return '/download';
-  return '/';
+interface AppProps {
+  initialPathname?: string;
+  initialLocale?: Locale;
 }
 
-export function App() {
-  const [path, setPath] = useState<string>(() =>
-    normalizePath(typeof window !== 'undefined' ? window.location.pathname : '/'),
+export function App({ initialPathname, initialLocale }: AppProps = {}) {
+  const initialRoute = parseRoute(
+    initialPathname ?? (typeof window !== 'undefined' ? window.location.pathname : '/'),
   );
-  const [locale, setLocale] = useState<Locale>(() => detectInitialLocale());
-  const [dark, setDark] = useState<boolean>(() =>
-    typeof document !== 'undefined'
-      ? document.documentElement.classList.contains('dark')
-      : false,
+
+  const [page, setPage] = useState<PageKey>(initialRoute.page);
+  const [locale, setLocale] = useState<Locale>(
+    initialLocale ?? (initialRoute.pathLocale ?? 'zh'),
   );
+  const [dark, setDark] = useState<boolean>(false);
   const [release, setRelease] = useState<ReleaseInfo>(() => buildFallbackRelease());
-  const visitorOs = useMemo(() => detectVisitorOs(), []);
+  const [visitorOs, setVisitorOs] = useState<{ os: OsKey; arch: ArchKey }>({
+    os: 'macos',
+    arch: 'arm64',
+  });
+
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains('dark'));
+    setVisitorOs(detectVisitorOs());
+
+    const params = new URLSearchParams(window.location.search);
+    const queryLang = params.get('lang');
+    if (queryLang === 'en' || queryLang === 'zh') {
+      setLocale(queryLang);
+    }
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+    document.title = PAGE_TITLES[locale][page];
     try {
       localStorage.setItem('codexhost-lang', locale);
     } catch {
       // ignore
     }
-  }, [locale]);
+  }, [locale, page]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
@@ -79,35 +102,51 @@ export function App() {
 
   useEffect(() => {
     const handlePop = () => {
-      setPath(normalizePath(window.location.pathname));
+      const next = parseRoute(window.location.pathname);
+      setPage(next.page);
+      setLocale(next.pathLocale ?? 'zh');
     };
     window.addEventListener('popstate', handlePop);
     return () => window.removeEventListener('popstate', handlePop);
   }, []);
 
-  const navigate = useCallback((target: string) => {
-    const [rawPath, hash] = target.split('#');
-    const nextPath = normalizePath(rawPath || '/');
-    const fullUrl = hash ? `${nextPath}#${hash}` : nextPath;
+  const navigate = useCallback(
+    (target: string) => {
+      const [rawPath, hash] = target.split('#');
+      const parsed = parseRoute(rawPath || '/');
+      const nextLocale = parsed.pathLocale ?? locale;
+      const nextPath = buildRoutePath(parsed.page, nextLocale);
+      const fullUrl = hash ? `${nextPath}#${hash}` : nextPath;
 
-    window.history.pushState({}, '', fullUrl);
-    setPath(nextPath);
+      window.history.pushState({}, '', fullUrl);
+      setPage(parsed.page);
+      if (nextLocale !== locale) {
+        setLocale(nextLocale);
+      }
 
-    if (hash) {
-      window.requestAnimationFrame(() => {
-        const el = document.getElementById(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-  }, []);
+      if (hash) {
+        window.requestAnimationFrame(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    },
+    [locale],
+  );
 
   const handleToggleLocale = useCallback(() => {
-    setLocale((prev) => (prev === 'zh' ? 'en' : 'zh'));
-  }, []);
+    const nextLocale: Locale = locale === 'zh' ? 'en' : 'zh';
+    const nextPath = buildRoutePath(page, nextLocale);
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    window.history.pushState({}, '', `${nextPath}${hash}`);
+    setLocale(nextLocale);
+  }, [locale, page]);
+
+  const currentPath = buildRoutePath(page, locale);
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
@@ -117,12 +156,13 @@ export function App() {
         dark={dark}
         onSetDark={handleSetDark}
         starsLabel={release.starsLabel}
-        currentPath={path}
+        currentPath={currentPath}
+        currentPage={page}
         onNavigate={navigate}
       />
 
       <div className="flex-1">
-        {path === '/download' ? (
+        {page === 'download' ? (
           <DownloadPage locale={locale} release={release} initialOs={visitorOs} />
         ) : (
           <HomePage

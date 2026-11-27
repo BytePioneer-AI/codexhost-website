@@ -552,10 +552,10 @@ export function MultiHostStage({ locale, onNavigate }: MultiHostStageProps) {
       <div className="mt-10 pt-6 border-t border-hairline flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-ink-muted">
         <span>{zh ? '跨机派活 · 远端文件预览' : 'Cross-host dispatch · Remote preview'}</span>
         <a
-          href="/download#mobile"
+          href={zh ? '/download#mobile' : '/en/download#mobile'}
           onClick={(e) => {
             e.preventDefault();
-            onNavigate('/download#mobile');
+            onNavigate(zh ? '/download#mobile' : '/en/download#mobile');
           }}
           className="inline-flex items-center gap-0.5 text-ink hover:opacity-70 transition-opacity font-medium"
         >
@@ -563,10 +563,10 @@ export function MultiHostStage({ locale, onNavigate }: MultiHostStageProps) {
           <ChevronRight className="w-3.5 h-3.5" />
         </a>
         <a
-          href="/download#cli"
+          href={zh ? '/download#cli' : '/en/download#cli'}
           onClick={(e) => {
             e.preventDefault();
-            onNavigate('/download#cli');
+            onNavigate(zh ? '/download#cli' : '/en/download#cli');
           }}
           className="inline-flex items-center gap-0.5 text-ink hover:opacity-70 transition-opacity font-medium"
         >

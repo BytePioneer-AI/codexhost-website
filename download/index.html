@@ -8,11 +8,21 @@
     <title>下载 CodexHost — macOS · Windows · Linux · Android</title>
     <meta
       name="description"
-      content="下载 CodexHost：开源免费，不用注册账号，一切都在你自己的电脑上运行。支持 macOS、Windows、Linux 与手机端。"
+      content="下载 CodexHost（开源免费、无需注册账号）：支持 macOS Apple Silicon / Intel、Windows x64 / ARM64、Linux、Android APK、iOS PWA 以及 npm / winget 命令行安装。"
     />
+    <meta
+      name="keywords"
+      content="下载 CodexHost, codexhost download, CodexHost macOS, CodexHost Windows, CodexHost Linux, CodexHost Android APK, @codexhost/cli"
+    />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://chost.dev/download" />
+    <link rel="alternate" hreflang="zh-CN" href="https://chost.dev/download" />
+    <link rel="alternate" hreflang="en" href="https://chost.dev/en/download" />
+    <link rel="alternate" hreflang="x-default" href="https://chost.dev/download" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CodexHost" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://chost.dev/download" />
     <meta property="og:title" content="下载 CodexHost — macOS · Windows · Linux · Android" />
     <meta
@@ -20,8 +30,47 @@
       content="下载 CodexHost：开源免费，支持独立桌面端、官方 Codex Desktop、Web/PWA 与 Android APK。"
     />
     <meta property="og:image" content="https://chost.dev/og-image.png" />
+    <meta property="og:image:alt" content="下载 CodexHost 客户端" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="下载 CodexHost — macOS · Windows · Linux · Android" />
+    <meta
+      name="twitter:description"
+      content="下载 CodexHost：开源免费，支持独立桌面端、官方 Codex Desktop、Web/PWA 与 Android APK。"
+    />
     <meta name="twitter:image" content="https://chost.dev/og-image.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "name": "下载 CodexHost",
+            "url": "https://chost.dev/download",
+            "inLanguage": "zh-CN"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Windows, Linux, Android, Web",
+            "softwareVersion": "0.28.1",
+            "url": "https://chost.dev/",
+            "downloadUrl": "https://chost.dev/download",
+            "license": "https://www.gnu.org/licenses/lgpl-3.0.html",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "sameAs": [
+              "https://github.com/BytePioneer-AI/codex-host"
+            ]
+          }
+        ]
+      }
+    </script>
     <script>
       (function () {
         try {
@@ -39,7 +88,7 @@
     </script>
   </head>
   <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { COPY, type Locale } from '../data/i18n';
+import { buildRoutePath, COPY, type Locale } from '../data/i18n';
 import { GITHUB_DOCS_URL, GITHUB_RELEASES_URL, GITHUB_REPO_URL } from '../data/releases';
 import { CodexHostLogo } from './Icons';
 
@@ -9,6 +9,7 @@ interface FooterProps {
 
 export function Footer({ locale, onNavigate }: FooterProps) {
   const t = COPY[locale].footer;
+  const downloadHref = buildRoutePath('download', locale);
   return (
     <footer className="border-t border-hairline bg-canvas">
       <div className="max-w-[1120px] mx-auto px-5 sm:px-6 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[13px] text-ink-muted">
@@ -21,10 +22,10 @@ export function Footer({ locale, onNavigate }: FooterProps) {
 
         <div className="flex flex-wrap items-center gap-5">
           <a
-            href="/download"
+            href={downloadHref}
             onClick={(e) => {
               e.preventDefault();
-              onNavigate('/download');
+              onNavigate(downloadHref);
             }}
             className="hover:text-ink transition-colors"
           >

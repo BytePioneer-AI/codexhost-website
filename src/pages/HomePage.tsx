@@ -5,7 +5,7 @@ import {
   MessageSquare,
   X,
 } from 'lucide-react';
-import { COPY, type Locale } from '../data/i18n';
+import { buildRoutePath, COPY, type Locale } from '../data/i18n';
 import { FLAGSHIP_AGENTS } from '../data/agents';
 import { GITHUB_REPO_URL, type OsKey, type ArchKey, type ReleaseInfo } from '../data/releases';
 import { CodexHostLogo, GitHubIcon, OsIcon } from '../components/Icons';
@@ -40,6 +40,7 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
   const primaryAsset =
     release.assets[primaryAssetKey] || release.assets['macos-arm64'];
   const primaryDownloadLabel = t.hero.downloadOs[visitorOs.os];
+  const downloadHref = buildRoutePath('download', locale);
 
   return (
     <main className="pt-14">
@@ -102,10 +103,10 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
             <span>macOS</span>
             <span aria-hidden="true">·</span>
             <a
-              href="/download"
+              href={downloadHref}
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('/download');
+                onNavigate(downloadHref);
               }}
               className="underline underline-offset-4 hover:text-ink transition-colors"
             >
@@ -113,10 +114,10 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
             </a>
             <span aria-hidden="true">·</span>
             <a
-              href="/download#mobile"
+              href={`${downloadHref}#mobile`}
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('/download#mobile');
+                onNavigate(`${downloadHref}#mobile`);
               }}
               className="underline underline-offset-4 hover:text-ink transition-colors"
             >
@@ -288,10 +289,10 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
               <span>{primaryDownloadLabel}</span>
             </a>
             <a
-              href="/download"
+              href={downloadHref}
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('/download');
+                onNavigate(downloadHref);
               }}
               className="inline-flex items-center justify-center h-11 px-5 rounded-lg bg-surface-card border border-hairline-strong hover:border-ink/35 text-ink text-[14px] font-medium transition-colors"
             >

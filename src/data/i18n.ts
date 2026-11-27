@@ -1,4 +1,31 @@
 export type Locale = 'zh' | 'en';
+export type PageKey = 'home' | 'download';
+
+export function parseRoute(pathname: string): { page: PageKey; pathLocale: Locale | null } {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+  if (clean === '/en') return { page: 'home', pathLocale: 'en' };
+  if (clean.startsWith('/en/download')) return { page: 'download', pathLocale: 'en' };
+  if (clean.startsWith('/download')) return { page: 'download', pathLocale: null };
+  return { page: 'home', pathLocale: null };
+}
+
+export function buildRoutePath(page: PageKey, locale: Locale): string {
+  if (locale === 'en') {
+    return page === 'download' ? '/en/download' : '/en';
+  }
+  return page === 'download' ? '/download' : '/';
+}
+
+export const PAGE_TITLES: Record<Locale, Record<PageKey, string>> = {
+  zh: {
+    home: 'CodexHost — 在 Codex 里，调度所有编程 Agent',
+    download: '下载 CodexHost — macOS · Windows · Linux · Android',
+  },
+  en: {
+    home: 'CodexHost — Run Every Coding Agent as One Workspace',
+    download: 'Download CodexHost — macOS · Windows · Linux · Android',
+  },
+};
 
 export function detectInitialLocale(): Locale {
   if (typeof window === 'undefined') return 'zh';

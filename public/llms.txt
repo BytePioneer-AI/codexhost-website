@@ -1,0 +1,28 @@
+# CodexHost
+
+> CodexHost is a free, open-source (LGPL-3.0), local-first workspace that unifies 18+ coding agents—including Codex, Claude Code, Pi, Grok, OpenCode, Cursor CLI, Antigravity, GitHub Copilot, DeepSeek, Qwen Code, Kimi Code, and Devin—inside one consistent interface across Desktop, Web, and Mobile.
+
+## Official Links
+
+- Website (Chinese): https://chost.dev/
+- Website (English): https://chost.dev/en
+- Download (Chinese): https://chost.dev/download
+- Download (English): https://chost.dev/en/download
+- GitHub Repository: https://github.com/BytePioneer-AI/codex-host
+- Releases: https://github.com/BytePioneer-AI/codex-host/releases
+- Documentation: https://github.com/BytePioneer-AI/codex-host/tree/main/docs
+
+## Core Capabilities
+
+- **One Host, Three Clients in Sync**: Use the lightweight standalone CodexHost Desktop app, enhance the official Codex Desktop client, or connect from Web / PWA / Android APK—all backed by the same local Host with real-time state sync.
+- **Cross-Agent Delegation & Context Handoff**: Dispatch parallel child tasks across different coding agents (e.g., Codex -> Claude Code, Pi, Grok) with automatic result flowback and lossless thread context handoff.
+- **Multi-Host Peer Hub & Mobile Control**: Manage macOS, Linux dev boxes, and Windows rigs from one sidebar and monitor or reply to sessions from your phone over LAN or a self-hosted Relay.
+- **Native Protocols & Local Credentials**: Drives each agent's native CLI/runtime directly on your machine—preserving diff review, git worktree isolation, Plan Mode, approvals, background terminals, and existing local credentials with zero third-party proxy.
+
+## Supported Platforms & Installation
+
+- **macOS**: Apple Silicon (ARM64) & Intel (x64) `.dmg` installers
+- **Windows**: x64 & ARM64 `.exe` installers, or `winget install --id BytePioneer-AI.CodexHost --exact`
+- **Linux**: x64 & ARM64 self-contained `.tar.gz` bundles (Desktop + headless Web daemon)
+- **Mobile**: Native Android `.apk` and iOS Safari PWA
+- **CLI**: `npm install -g @codexhost/cli`

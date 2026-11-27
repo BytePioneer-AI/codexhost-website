@@ -8,11 +8,21 @@
     <title>CodexHost — 在 Codex 里，调度所有编程 Agent</title>
     <meta
       name="description"
-      content="保留官方 Codex 体验，也自带轻量桌面与 Web 端。让 Claude Code、Pi、Grok 等 18+ Agent 互相派活、无缝交接，跨电脑和手机随时掌控。"
+      content="CodexHost 开源免费、本地优先：保留官方 Codex Desktop 体验，也自带轻量独立桌面端、Web 端与手机端。让 Claude Code、Pi、Grok、OpenCode、Cursor CLI 等 18+ 编程 Agent 互相派活、无损交接，跨多台电脑和手机随时掌控。"
     />
+    <meta
+      name="keywords"
+      content="CodexHost, codexhost, Codex Host, Codex Desktop, Claude Code, Pi, Grok, OpenCode, Cursor CLI, Antigravity, DeepSeek, Qwen Code, 编程 Agent, 多 Agent 协作, 多机远程控制"
+    />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://chost.dev/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://chost.dev/" />
+    <link rel="alternate" hreflang="en" href="https://chost.dev/en" />
+    <link rel="alternate" hreflang="x-default" href="https://chost.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="CodexHost" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://chost.dev/" />
     <meta property="og:title" content="CodexHost — 在 Codex 里，调度所有编程 Agent" />
     <meta
@@ -20,6 +30,7 @@
       content="把 18+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。"
     />
     <meta property="og:image" content="https://chost.dev/og-image.png" />
+    <meta property="og:image:alt" content="CodexHost 多编程 Agent 协作工作台" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="CodexHost — 在 Codex 里，调度所有编程 Agent" />
     <meta
@@ -27,6 +38,79 @@
       content="把 18+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。"
     />
     <meta name="twitter:image" content="https://chost.dev/og-image.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "url": "https://chost.dev/",
+            "inLanguage": ["zh-CN", "en"]
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "CodexHost",
+            "alternateName": ["codexhost", "Codex Host"],
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "macOS, Windows, Linux, Android, Web",
+            "softwareVersion": "0.28.1",
+            "url": "https://chost.dev/",
+            "downloadUrl": "https://chost.dev/download",
+            "image": "https://chost.dev/og-image.png",
+            "license": "https://www.gnu.org/licenses/lgpl-3.0.html",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "sameAs": [
+              "https://github.com/BytePioneer-AI/codex-host"
+            ],
+            "description": "CodexHost 把 Codex、Claude Code、Pi、Grok、OpenCode、Cursor CLI 等 18+ 编程 Agent 聚进同一工作台，支持多 Agent 委派、无损上下文交接、多机 Peer Hub 与手机端远程掌控。"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "没装官方 Codex Desktop 或用 Linux 能用 CodexHost 吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "可以。自带轻量独立桌面端与 Web 端，macOS / Windows / Linux 开箱即用；装了官方客户端也可随时切换增强模式。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "CodexHost 收费吗？代码和账号会经过第三方服务器吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "LGPL-3.0 开源免费，无需注册账号；代码与凭据全部留在本机直连官方服务，不经过第三方代理。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "macOS 首次打开提示「应用无法验证」怎么办？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "在终端执行 xattr -dr com.apple.quarantine /Applications/codexhost.app 后重开即可，下载页支持一键复制。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "CodexHost 和普通多模型聊天壳有什么区别？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "它直连各家编程 Agent 原生运行时，完整保留文件编辑、Worktree 隔离、Plan Mode、后台终端与子会话委派。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
     <script>
       (function () {
         try {
@@ -44,7 +128,7 @@
     </script>
   </head>
   <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

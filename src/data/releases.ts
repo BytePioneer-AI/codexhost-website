@@ -10,7 +10,7 @@ export const GITHUB_DOCS_URL = `${GITHUB_REPO_URL}/tree/main/docs`;
 /** Optional mirror/CDN prefix for release binaries. Keep empty to serve from GitHub Releases. */
 export const CDN_BASE_URL: string = '';
 
-export const FALLBACK_VERSION = '0.27.0';
+export const FALLBACK_VERSION = '0.28.1';
 export const FALLBACK_STARS = '3.5k';
 
 export interface DownloadAsset {
@@ -53,42 +53,42 @@ export function buildFallbackRelease(version = FALLBACK_VERSION, starsLabel = FA
       os: 'macos',
       arch: 'arm64',
       filename: `codexhost-${cleanVer}-macos-arm64.dmg`,
-      size: '64.3 MB',
+      size: '64.4 MB',
     },
     {
       id: 'macos-x64',
       os: 'macos',
       arch: 'x64',
       filename: `codexhost-${cleanVer}-macos-x64.dmg`,
-      size: '66.7 MB',
+      size: '66.8 MB',
     },
     {
       id: 'windows-x64',
       os: 'windows',
       arch: 'x64',
       filename: `codexhost-${cleanVer}-windows-x64.exe`,
-      size: '39.0 MB',
+      size: '39.1 MB',
     },
     {
       id: 'windows-arm64',
       os: 'windows',
       arch: 'arm64',
       filename: `codexhost-${cleanVer}-windows-arm64.exe`,
-      size: '36.1 MB',
+      size: '36.2 MB',
     },
     {
       id: 'linux-x64',
       os: 'linux',
       arch: 'x64',
       filename: `codexhost-${cleanVer}-linux-x64.tar.gz`,
-      size: '65.8 MB',
+      size: '65.9 MB',
     },
     {
       id: 'linux-arm64',
       os: 'linux',
       arch: 'arm64',
       filename: `codexhost-${cleanVer}-linux-arm64.tar.gz`,
-      size: '65.5 MB',
+      size: '65.6 MB',
     },
     {
       id: 'android',

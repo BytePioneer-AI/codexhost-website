@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ChevronRight,
   Download,
@@ -73,12 +73,22 @@ function CopyableCommand({
 
 export function DownloadPage({ locale, release, initialOs }: DownloadPageProps) {
   const t = COPY[locale].downloadPage;
+  const userPickedOsRef = useRef(false);
   const [selectedOs, setSelectedOs] = useState<OsKey>(initialOs.os);
   const [archByOs, setArchByOs] = useState<Record<OsKey, ArchKey>>({
     macos: initialOs.os === 'macos' ? initialOs.arch : 'arm64',
     windows: initialOs.os === 'windows' ? initialOs.arch : 'x64',
     linux: initialOs.os === 'linux' ? initialOs.arch : 'x64',
   });
+
+  useEffect(() => {
+    if (userPickedOsRef.current) return;
+    setSelectedOs(initialOs.os);
+    setArchByOs((prev) => ({
+      ...prev,
+      [initialOs.os]: initialOs.arch,
+    }));
+  }, [initialOs.os, initialOs.arch]);
 
   const currentArch = archByOs[selectedOs];
   const assetKey = `${selectedOs}-${currentArch}` as keyof typeof t.archLabels;
@@ -141,7 +151,10 @@ export function DownloadPage({ locale, release, initialOs }: DownloadPageProps) 
                   <button
                     key={os}
                     type="button"
-                    onClick={() => setSelectedOs(os)}
+                    onClick={() => {
+                      userPickedOsRef.current = true;
+                      setSelectedOs(os);
+                    }}
                     className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-[7px] text-[13.5px] font-medium transition-all ${
                       active
                         ? 'bg-surface-card text-ink shadow-subtle'
@@ -222,7 +235,7 @@ export function DownloadPage({ locale, release, initialOs }: DownloadPageProps) 
                 {steps.map((step, index) => {
                   const dynamicCommand =
                     'command' in step && step.command
-                      ? step.command.replace('0.27.0', release.version)
+                      ? step.command.replace(/0\.\d+\.\d+/, release.version)
                       : undefined;
                   return (
                     <li
