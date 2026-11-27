@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <title>下载 CodexHost — macOS · Windows · Linux · Android</title>
+    <meta
+      name="description"
+      content="下载 CodexHost：开源免费，不用注册账号，一切都在你自己的电脑上运行。支持 macOS、Windows、Linux 与手机端。"
+    />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('codexhost-theme');
+          var preferDark =
+            saved === 'dark' ||
+            (!saved &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (preferDark) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

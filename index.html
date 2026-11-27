@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <title>CodexHost — 在 Codex 里，调度所有编程 Agent</title>
+    <meta
+      name="description"
+      content="保留官方 Codex 体验，也自带轻量桌面与 Web 端。让 Claude Code、Pi、Grok 等 18+ Agent 互相派活、无缝交接，跨电脑和手机随时掌控。"
+    />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('codexhost-theme');
+          var preferDark =
+            saved === 'dark' ||
+            (!saved &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (preferDark) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-canvas text-ink antialiased selection:bg-ink selection:text-canvas">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
