@@ -101,6 +101,8 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
 
           {/* Micro platform line */}
           <p className="mt-3.5 text-[12.5px] text-ink-muted flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
+            <span>{t.hero.metaStandalone}</span>
+            <span aria-hidden="true">·</span>
             <span>macOS</span>
             <span aria-hidden="true">·</span>
             <a
