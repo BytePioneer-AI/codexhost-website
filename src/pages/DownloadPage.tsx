@@ -395,9 +395,9 @@ export function DownloadPage({ locale, release, initialOs }: DownloadPageProps) 
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="rounded-[12px] border border-hairline bg-surface-card p-5">
-              <div className="text-[13.5px] font-semibold text-ink">{t.cliNpmLabel}</div>
+              <div className="text-[13.5px] font-semibold text-ink">{t.cliMacosLabel}</div>
               <CopyableCommand
-                command="npm install -g @codexhost/cli"
+                command="curl -fsSL https://chost.dev/install.sh | bash"
                 copyLabel={t.copy}
                 copiedLabel={t.copied}
               />
@@ -407,6 +407,15 @@ export function DownloadPage({ locale, release, initialOs }: DownloadPageProps) 
               <div className="text-[13.5px] font-semibold text-ink">{t.cliWingetLabel}</div>
               <CopyableCommand
                 command="winget install --id BytePioneer-AI.CodexHost --exact"
+                copyLabel={t.copy}
+                copiedLabel={t.copied}
+              />
+            </div>
+
+            <div className="rounded-[12px] border border-hairline bg-surface-card p-5 md:col-span-2">
+              <div className="text-[13.5px] font-semibold text-ink">{t.cliNpmLabel}</div>
+              <CopyableCommand
+                command="npm install -g @codexhost/cli"
                 copyLabel={t.copy}
                 copiedLabel={t.copied}
               />

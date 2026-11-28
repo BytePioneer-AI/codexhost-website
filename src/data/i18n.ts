@@ -114,7 +114,7 @@ export const COPY = {
         },
         {
           q: 'macOS 首次打开提示「应用无法验证」怎么办？',
-          a: '在终端执行 xattr -dr com.apple.quarantine /Applications/codexhost.app 后重开即可，下载页支持一键复制。',
+          a: '推荐在下载页复制 macOS 一键安装命令，可免弹窗直接装好；如手动下载 .dmg，在终端执行 xattr -dr com.apple.quarantine /Applications/codexhost.app 后重开即可。',
         },
         {
           q: '它和普通多模型聊天壳有什么区别？',
@@ -188,17 +188,18 @@ export const COPY = {
       steps: {
         macos: [
           {
-            title: '打开 .dmg，拖进「应用程序」',
-            desc: '双击安装包，将 codexhost.app 拖入「应用程序」文件夹。',
+            title: '推荐：一键安装（免验证弹窗）',
+            desc: '在「终端」粘贴并回车，自动安装到「应用程序」且无需管理员密码：',
+            command: 'curl -fsSL https://chost.dev/install.sh | bash',
           },
           {
-            title: '首次打开若提示「应用无法验证」',
-            desc: '在「终端」粘贴下面这行命令并回车，再重新打开即可：',
+            title: '或手动下载 .dmg 安装',
+            desc: '双击 .dmg 拖入「应用程序」；若提示无法验证，在终端执行：',
             command: 'xattr -dr com.apple.quarantine /Applications/codexhost.app',
           },
           {
-            title: '自动识别本机 Agent',
-            desc: '打开即自动发现本机已登录的 Codex、Claude Code、Pi 等工具，无需注册账号。',
+            title: '开箱即用，自动识别本机 Agent',
+            desc: '打开即发现本机已登录的 Codex、Claude Code、Pi 等工具；更新后想保留通知等权限，可在「设置 → 更新」一键开启。',
           },
         ],
         windows: [
@@ -250,7 +251,8 @@ export const COPY = {
         '选择「添加到主屏幕」，像原生应用一样全屏使用。',
       ],
       cliTitle: '开发者命令行',
-      cliSubtitle: '习惯用终端包管理器安装与升级的开发者，可直接通过命令行获取。',
+      cliSubtitle: '习惯用终端安装与升级的用户，可直接通过命令行获取。',
+      cliMacosLabel: 'macOS 一键安装',
       cliNpmLabel: 'npm 全局安装 CLI',
       cliWingetLabel: 'Windows winget 安装',
     },
@@ -326,7 +328,7 @@ export const COPY = {
         },
         {
           q: 'macOS says the app cannot be verified on first launch?',
-          a: 'Run xattr -dr com.apple.quarantine /Applications/codexhost.app in Terminal and reopen (one-click copy on Download).',
+          a: 'Use the macOS one-line install command on the Download page to avoid Gatekeeper prompts; if you installed the .dmg manually, run xattr -dr com.apple.quarantine /Applications/codexhost.app in Terminal and reopen.',
         },
         {
           q: 'How is this different from a multi-model chat wrapper?',
@@ -400,17 +402,18 @@ export const COPY = {
       steps: {
         macos: [
           {
-            title: 'Open the .dmg and drag to Applications',
-            desc: 'Double-click the installer and drag codexhost.app into your Applications folder.',
+            title: 'Recommended: One-line install (no Gatekeeper prompt)',
+            desc: 'Paste into Terminal to install into Applications without a password:',
+            command: 'curl -fsSL https://chost.dev/install.sh | bash',
           },
           {
-            title: 'If macOS says the app cannot be verified',
-            desc: 'Paste this command into Terminal, press Enter, then reopen the app:',
+            title: 'Or install the .dmg manually',
+            desc: 'Drag codexhost.app into Applications; if macOS blocks it, run:',
             command: 'xattr -dr com.apple.quarantine /Applications/codexhost.app',
           },
           {
-            title: 'Auto-detects your local agents',
-            desc: 'Automatically discovers Codex, Claude Code, Pi, and other logged-in CLIs—no signup.',
+            title: 'Ready out of the box',
+            desc: 'Auto-detects Codex, Claude Code, Pi, and other local agents. Want to keep macOS permissions across updates? Enable it in Settings → Updates.',
           },
         ],
         windows: [
@@ -462,7 +465,8 @@ export const COPY = {
         'Select “Add to Home Screen” for a full-screen app experience.',
       ],
       cliTitle: 'Command Line',
-      cliSubtitle: 'Prefer package managers? Install or upgrade straight from your terminal.',
+      cliSubtitle: 'Prefer the terminal? Install or upgrade straight from your shell.',
+      cliMacosLabel: 'macOS one-line install',
       cliNpmLabel: 'Install CLI via npm',
       cliWingetLabel: 'Install on Windows via winget',
     },

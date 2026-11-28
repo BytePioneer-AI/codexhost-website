@@ -10,7 +10,7 @@ export const GITHUB_DOCS_URL = `${GITHUB_REPO_URL}/tree/main/docs`;
 /** Optional mirror/CDN prefix for release binaries. Keep empty to serve from GitHub Releases. */
 export const CDN_BASE_URL: string = '';
 
-export const FALLBACK_VERSION = '0.28.1';
+export const FALLBACK_VERSION = '0.28.2';
 export const FALLBACK_STARS = '3.5k';
 
 export interface DownloadAsset {

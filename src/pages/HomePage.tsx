@@ -36,9 +36,6 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [qrOpen]);
 
-  const primaryAssetKey = `${visitorOs.os}-${visitorOs.arch}`;
-  const primaryAsset =
-    release.assets[primaryAssetKey] || release.assets['macos-arm64'];
   const primaryDownloadLabel = t.hero.downloadOs[visitorOs.os];
   const downloadHref = buildRoutePath('download', locale);
 
@@ -81,7 +78,11 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
           {/* CTA Buttons — Kettu pure black primary button, ZERO size/chip pills inside */}
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <a
-              href={primaryAsset.url}
+              href={downloadHref}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(downloadHref);
+              }}
               className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-cta text-cta-ink hover:bg-cta-hover text-[14.5px] font-medium transition-colors"
             >
               <OsIcon os={visitorOs.os} className="w-4 h-4" />
@@ -282,7 +283,11 @@ export function HomePage({ locale, release, visitorOs, onNavigate }: HomePagePro
 
           <div className="pt-1 flex flex-wrap items-center justify-center gap-3">
             <a
-              href={primaryAsset.url}
+              href={downloadHref}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(downloadHref);
+              }}
               className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-lg bg-cta text-cta-ink hover:bg-cta-hover text-[14px] font-medium transition-colors"
             >
               <OsIcon os={visitorOs.os} className="w-4 h-4" />
