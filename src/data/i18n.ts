@@ -22,7 +22,7 @@ export const PAGE_TITLES: Record<Locale, Record<PageKey, string>> = {
     download: '下载 CodexHost — macOS · Windows · Linux · Android',
   },
   en: {
-    home: 'CodexHost — Run Every Coding Agent as One Workspace',
+    home: 'CodexHost — Orchestrate Every Coding Agent, Right Inside Codex',
     download: 'Download CodexHost — macOS · Windows · Linux · Android',
   },
 };
@@ -56,7 +56,7 @@ export const COPY = {
       releaseNote: '多机 Peer Hub 与跨 Agent 上下文交接',
       title: '在 Codex 里，调度所有编程 Agent',
       subtitle:
-        '把 18+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。',
+        '把 19+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。',
       downloadOs: {
         macos: '下载 macOS 版',
         windows: '下载 Windows 版',
@@ -87,9 +87,9 @@ export const COPY = {
       bullets: [],
     },
     multiHost: {
-      eyebrow: '多机与移动',
-      title: '离开电脑，多台机器照样在手边',
-      lead: '本机 Mac、Linux 开发机与 Windows 聚进同一侧栏，手机随时接管。',
+      eyebrow: '多机互联与跨节点委派',
+      title: '多机双向互通，跨节点互相派活',
+      lead: 'Mac、Linux 与 Windows 一键双向互联，不同机器上的 Agent 直接跨机委派并自动回流，手机随时审批与接力。',
       peerTitle: '',
       peerDesc: '',
       cards: [],
@@ -266,9 +266,9 @@ export const COPY = {
     },
     hero: {
       releaseNote: 'Peer Hub multi-machine & cross-agent handoff',
-      title: 'Run every coding agent, as one workspace.',
+      title: 'Orchestrate every coding agent, right inside Codex.',
       subtitle:
-        'Unify 18+ coding agents in one workspace—delegate in parallel, hand off context cleanly, and stay in reach from any device.',
+        'Unify 19+ coding agents in one workspace—delegate in parallel, hand off context cleanly, and stay in reach from any device.',
       downloadOs: {
         macos: 'Download for macOS',
         windows: 'Download for Windows',
@@ -299,9 +299,9 @@ export const COPY = {
       bullets: [],
     },
     multiHost: {
-      eyebrow: 'Multi-Host & Mobile',
-      title: 'Step away. Every machine stays within reach.',
-      lead: 'Macs, Linux dev boxes, and Windows rigs in one sidebar—reachable from your phone.',
+      eyebrow: 'Multi-Machine Mesh & Mobile',
+      title: 'Bidirectional mesh. Cross-node delegation.',
+      lead: 'Link Macs, Linux servers, and Windows rigs with one click so agents delegate directly across machines—and steer from your phone anywhere.',
       peerTitle: '',
       peerDesc: '',
       cards: [],

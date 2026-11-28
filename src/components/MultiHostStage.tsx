@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { ChevronRight, Laptop, Monitor, Send, Server } from 'lucide-react';
 import type { Locale } from '../data/i18n';
+import { ThemedShot } from './ThemedShot';
 
 interface MultiHostStageProps {
   locale: Locale;
@@ -548,9 +549,29 @@ export function MultiHostStage({ locale, onNavigate }: MultiHostStageProps) {
         </div>
       </div>
 
+      {/* Real 4-node Bidirectional Mesh Topology Screenshot */}
+      <div className="mt-10 space-y-3">
+        <div className="showcase-frame overflow-hidden bg-surface-card">
+          <ThemedShot
+            name="readme-feat-mesh"
+            locale={locale}
+            alt={
+              zh
+                ? 'CodexHost 原生多机连接拓扑实景：本机、Linux GPU Server、Windows Test Rig 与 Mac Studio 双向互通'
+                : 'CodexHost live 4-node bidirectional mesh topology linking Local, Linux GPU Server, Windows Test Rig, and Mac Studio'
+            }
+          />
+        </div>
+        <p className="text-[12.5px] text-ink-muted text-center">
+          {zh
+            ? '原生多机连接拓扑（一键双向互通） — 不同机器上的 Agent 可直接跨机互相委派任务、自动回流结果。'
+            : 'Live multi-machine connection topology (one-click bidirectional mesh) — agents on different machines delegate directly to each other.'}
+        </p>
+      </div>
+
       {/* Ultra-concise single-row micro-strip with clean links */}
-      <div className="mt-10 pt-6 border-t border-hairline flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-ink-muted">
-        <span>{zh ? '跨机派活 · 远端文件预览' : 'Cross-host dispatch · Remote preview'}</span>
+      <div className="mt-8 pt-6 border-t border-hairline flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-ink-muted">
+        <span>{zh ? '双向互通 · 跨节点互相委派' : 'Bidirectional mesh · Cross-node delegation'}</span>
         <a
           href={zh ? '/download#mobile' : '/en/download#mobile'}
           onClick={(e) => {

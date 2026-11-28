@@ -304,7 +304,7 @@ export function ThreeClientSyncStage({ locale }: ThreeClientSyncStageProps) {
     {
       title: 'Codex Desktop',
       tag: zh ? '官方' : 'Official',
-      desc: zh ? '保留官方界面，原生接入 18+ Agent' : 'Official desktop UI with 18+ agents',
+      desc: zh ? '保留官方界面，原生接入 19+ Agent' : 'Official desktop UI with 19+ agents',
       icon: (
         <img
           src="/codex-desktop-logo.png"
