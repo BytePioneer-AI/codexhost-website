@@ -56,7 +56,7 @@ export const COPY = {
       releaseNote: '多机 Peer Hub 与跨 Agent 上下文交接',
       title: '在 Codex 里，调度所有编程 Agent',
       subtitle:
-        '把 19+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。',
+        '自带轻量独立桌面端（无需安装官方 Codex），把 19+ 编程 Agent 聚进同一工作台：互相派活、无损交接，跨电脑和手机随时掌控。',
       downloadOs: {
         macos: '下载 macOS 版',
         windows: '下载 Windows 版',
@@ -270,7 +270,7 @@ export const COPY = {
       releaseNote: 'Peer Hub multi-machine & cross-agent handoff',
       title: 'Orchestrate every coding agent, right inside Codex.',
       subtitle:
-        'Unify 19+ coding agents in one workspace—delegate in parallel, hand off context cleanly, and stay in reach from any device.',
+        'Ships with a lightweight standalone desktop app (no official Codex required)—unify 19+ coding agents in one workspace with parallel delegation, clean handoff, and cross-device control.',
       downloadOs: {
         macos: 'Download for macOS',
         windows: 'Download for Windows',
