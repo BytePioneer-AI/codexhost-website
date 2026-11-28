@@ -69,6 +69,7 @@ export const COPY = {
       moreAgents: '+6',
       tabs: [
         { id: 'delegation', label: '多 Agent 委派' },
+        { id: 'standalone', label: '独立客户端' },
         { id: 'handoff', label: '上下文交接' },
         { id: 'multihost', label: '多机与手机' },
         { id: 'native', label: '原生能力与扩展' },
@@ -283,6 +284,7 @@ export const COPY = {
       moreAgents: '+6',
       tabs: [
         { id: 'delegation', label: 'Delegation' },
+        { id: 'standalone', label: 'Standalone App' },
         { id: 'handoff', label: 'Handoff' },
         { id: 'multihost', label: 'Multi-Host & Mobile' },
         { id: 'native', label: 'Native & Extensions' },

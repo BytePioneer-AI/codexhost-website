@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { COPY, type Locale } from '../data/i18n';
 import { ThemedShot } from './ThemedShot';
 
-type ShowcaseTabId = 'delegation' | 'handoff' | 'multihost' | 'native';
+type ShowcaseTabId = 'delegation' | 'standalone' | 'handoff' | 'multihost' | 'native';
 
 interface HeroShowcaseProps {
   locale: Locale;
@@ -24,6 +24,13 @@ const TAB_SHOTS: Record<
     altEn: 'CodexHost desktop workbench and mobile companion with live multi-agent delegation',
     captionZh: '原生工作台与手机端实时同步：侧栏委派树清晰呈现 Codex、Claude Code、Grok 并行子会话。',
     captionEn: 'Desktop & mobile live-synced: inspect parallel Codex, Claude Code, and Grok child sessions in one sidebar tree.',
+  },
+  standalone: {
+    shot: 'readme-ch-desktop',
+    altZh: '轻量 CodexHost 独立桌面端实景：无需安装官方 Codex Desktop，与本地 Host 实时同步会话与委派树',
+    altEn: 'Lightweight CodexHost standalone desktop app syncing the exact same sessions and delegation trees via the local Host',
+    captionZh: '轻量 CodexHost 独立客户端（基于 Tauri）：无需安装官方 Codex Desktop，macOS / Windows / Linux 开箱即用，与同一本地 Host 实时同步。',
+    captionEn: 'Lightweight CodexHost standalone app (Tauri): runs on macOS, Windows, and Linux without official Codex Desktop, syncing live with the same local Host.',
   },
   handoff: {
     shot: 'readme-feat-handoff',
@@ -59,7 +66,7 @@ export function HeroShowcase({ locale }: HeroShowcaseProps) {
       {/* Compact segmented tab selector */}
       <div className="flex justify-center mb-5">
         <div
-          className="grid grid-cols-2 sm:inline-flex items-center gap-1 p-1 rounded-[10px] bg-surface-muted border border-hairline w-full sm:w-auto max-w-[360px] sm:max-w-none"
+          className="flex flex-wrap justify-center sm:inline-flex items-center gap-1 p-1 rounded-[10px] bg-surface-muted border border-hairline max-w-[420px] sm:max-w-none"
           role="tablist"
           aria-label={zh ? '工作台场景切换' : 'Workspace showcase tabs'}
         >
